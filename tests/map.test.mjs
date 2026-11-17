@@ -4,10 +4,10 @@ import { readFile } from 'node:fs/promises';
 import { pointBounds, bufferedBounds, contains, quadkey, bingTileURL, SITE_URL } from '../map-utils.js';
 const data = JSON.parse(await readFile(new URL('../Pontos.geojson', import.meta.url)));
 
-test('all 11 original points fit the campus boundary', () => {
-  assert.equal(data.features.length, 11);
+test('all original points fit the campus boundary', () => {
+  assert.equal(data.features.length, 12);
   const bbox = pointBounds(data), limits = bufferedBounds(bbox);
-  assert.deepEqual(bbox, [-52.690779327392519, -26.197701700332093, -52.688759765624965, -26.195555907849418]);
+  assert.deepEqual(bbox, [-52.690779327392519, -26.198034170376577, -52.688759765624965, -26.195555907849418]);
   for (const feature of data.features) assert.ok(contains(limits, ...feature.geometry.coordinates));
   assert.equal(contains(limits, -52.7, -26.2), false);
 });

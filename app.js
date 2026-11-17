@@ -21,7 +21,7 @@ function setPlacesOpen(open) {
 $('places-toggle').onclick = () => setPlacesOpen($('places-list').hidden);
 
 async function start() {
-  const response = await fetch('./Pontos.geojson');
+  const response = await fetch('./Pontos.geojson', { cache: 'no-cache' });
   if (!response.ok) throw new Error('Não foi possível carregar os locais. Recarregue a página.');
   const data = await response.json();
   const bounds = pointBounds(data), limits = bufferedBounds(bounds);

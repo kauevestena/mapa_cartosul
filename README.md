@@ -1,6 +1,6 @@
 # CartoSul 2026
 
-Mapa móvel dos 11 locais em `Pontos.geojson`, a única fonte de dados do evento. Os demais arquivos originais não são utilizados nem publicados.
+Mapa móvel dos locais em `Pontos.geojson`, a única fonte de dados do evento. A quantidade de locais, os marcadores, a lista, os popups e os limites acompanham o conteúdo atual do arquivo; cada abertura do mapa revalida o GeoJSON no servidor. Os demais arquivos originais não são utilizados nem publicados.
 
 URL após a aprovação e o merge: https://kauevestena.github.io/mapa_cartosul/
 
@@ -15,7 +15,7 @@ URL após a aprovação e o merge: https://kauevestena.github.io/mapa_cartosul/
 
 ## Limite de navegação
 
-O BBOX é calculado em tempo de execução a partir do GeoJSON: oeste −52.6907793274°, sul −26.1977017003°, leste −52.6887597656°, norte −26.1955559078°. Cada lado recebe 200 m usando os raios locais do elipsoide WGS84 (aproximação local com erro inferior a 1 m nesta área). `maxBounds` do MapLibre limita a navegação e o afastamento; não é uma máscara de recorte de pixels, e perspectivas inclinadas podem mostrar contexto além das bordas.
+O BBOX é calculado em tempo de execução a partir de todos os pontos do GeoJSON, sem coordenadas fixas no código. Cada lado recebe 200 m usando os raios locais do elipsoide WGS84 (aproximação local com erro inferior a 1 m nesta área). `maxBounds` do MapLibre limita a navegação e o afastamento; não é uma máscara de recorte de pixels, e perspectivas inclinadas podem mostrar contexto além das bordas.
 
 ## Desenvolvimento e publicação
 
