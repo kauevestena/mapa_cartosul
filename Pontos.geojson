@@ -1,0 +1,18 @@
+{
+"type": "FeatureCollection",
+"name": "Pontos",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{"type":"Feature","properties":{"Nome":"Anfiteatro","Anotação":"Local Central"},"geometry":{"type":"Point","coordinates":[-52.690276702880794,-26.197701700332093]}},
+{"type":"Feature","properties":{"Nome":"R.U.","Anotação":"Restaurante Universitário"},"geometry":{"type":"Point","coordinates":[-52.690779327392519,-26.197692089006512]}},
+{"type":"Feature","properties":{"Nome":"Quentuxa","Anotação":"Ponto de Água Quente"},"geometry":{"type":"Point","coordinates":[-52.689970184326128,-26.196465529485451]}},
+{"type":"Feature","properties":{"Nome":"Ponto de Ônibus","Anotação":"Transporte Público"},"geometry":{"type":"Point","coordinates":[-52.688923736572221,-26.196728734425509]}},
+{"type":"Feature","properties":{"Nome":"Vestiários Públicos","Anotação":"Com chuveiros e separação M/F"},"geometry":{"type":"Point","coordinates":[-52.68933819580073,-26.196241509081897]}},
+{"type":"Feature","properties":{"Nome":"Pista de Atletismo - Entrada","Anotação":null},"geometry":{"type":"Point","coordinates":[-52.688759765624965,-26.195669996331411]}},
+{"type":"Feature","properties":{"Nome":"Bloco B","Anotação":"apresentação de Pôsteres"},"geometry":{"type":"Point","coordinates":[-52.68953883361813,-26.196480685965845]}},
+{"type":"Feature","properties":{"Nome":"Entrada do Câmpus","Anotação":"para pedestres"},"geometry":{"type":"Point","coordinates":[-52.689166809081989,-26.196539463517464]}},
+{"type":"Feature","properties":{"Nome":"Quentuxa","Anotação":"Para Água quente (andar térreo)"},"geometry":{"type":"Point","coordinates":[-52.688959579467735,-26.197531284018499]}},
+{"type":"Feature","properties":{"Nome":"N110 - Andar Superior","Anotação":"Alojamento B"},"geometry":{"type":"Point","coordinates":[-52.690609367187491,-26.195575669018179]}},
+{"type":"Feature","properties":{"Nome":"M011 - Térreo","Anotação":"Alojamento A"},"geometry":{"type":"Point","coordinates":[-52.690290837890629,-26.195555907849418]}}
+]
+}
