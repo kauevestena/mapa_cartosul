@@ -7,6 +7,11 @@ function notify(message, persistent = false) {
   if (!persistent) statusTimer = setTimeout(() => { $('status').textContent = ''; }, 6500);
 }
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function dismissLocateHint() {
+  $('locate-hint').hidden = true;
+  $('locate').removeAttribute('aria-describedby');
+}
+$('locate-hint-close').onclick = dismissLocateHint;
 for (const button of document.querySelectorAll('[data-close]')) button.onclick = () => button.closest('dialog').close();
 $('share').onclick = () => { $('options').open = false; $('share-dialog').showModal(); };
 function setPlacesOpen(open) {
@@ -71,6 +76,7 @@ async function start() {
   map.addControl(geolocate, 'top-right');
   // The larger, labelled button triggers MapLibre's native tracking control.
   $('locate').onclick = () => {
+    dismissLocateHint();
     if (geolocate.trigger() === false) notify('Localização indisponível. Tente novamente em alguns instantes.');
   };
   geolocate.on('geolocate', () => { notify('Localização atualizada. O círculo azul indica a precisão do GPS.'); });
@@ -79,7 +85,7 @@ async function start() {
     notify(event.code === 1 ? 'Permita o acesso à localização nas configurações do navegador.' : 'Não foi possível obter o GPS. Tente novamente em uma área aberta.');
   });
   geolocate.on('trackuserlocationend', () => { $('locate').setAttribute('aria-pressed', 'false'); notify('Mapa livre para explorar. Toque em Minha localização para centralizar novamente.'); });
-  geolocate.on('trackuserlocationstart', () => { $('locate').setAttribute('aria-pressed', 'true'); notify('Buscando sua localização…'); });
+  geolocate.on('trackuserlocationstart', () => { dismissLocateHint(); $('locate').setAttribute('aria-pressed', 'true'); notify('Buscando sua localização…'); });
 
   let popup;
   const markerButtons = [];
@@ -166,7 +172,9 @@ async function start() {
   map.once('load', () => {
     $('basemap').disabled = false; $('terrain').disabled = false;
     $('locate').disabled = !navigator.geolocation || !isSecureContext;
-    notify($('locate').disabled ? 'A localização exige HTTPS e um navegador com GPS.' : 'Toque nos pontos ou use Minha localização para se orientar.');
+    $('locate-hint').hidden = $('locate').disabled;
+    if (!$('locate').disabled) $('locate').setAttribute('aria-describedby', 'locate-hint-text');
+    notify($('locate').disabled ? 'A localização exige HTTPS e um navegador com GPS.' : '');
   });
   map.getCanvas().addEventListener('webglcontextlost', () => notify('O mapa foi interrompido. Recarregue a página para continuar.', true));
 }

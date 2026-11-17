@@ -23,7 +23,13 @@
       <button id="share" type="button">QR code do mapa ↗</button>
     </div></details>
   </section>
-  <button id="locate" class="locate" disabled><span aria-hidden="true">◎</span> Minha localização</button>
+  <div class="locate-tools">
+    <aside id="locate-hint" class="locate-hint" role="note" hidden>
+      <p id="locate-hint-text">Clique aqui para ver sua localização!</p>
+      <button id="locate-hint-close" type="button" aria-label="Fechar dica de localização">×</button>
+    </aside>
+    <button id="locate" class="locate" disabled><span aria-hidden="true">◎</span> Minha localização</button>
+  </div>
   <section class="places open" aria-label="Locais do evento">
     <button id="places-toggle" aria-expanded="true" aria-controls="places-list"><span><strong>Explore o câmpus</strong><small id="point-count">Carregando locais…</small></span><span id="list-arrow" aria-hidden="true">↓</span></button>
     <ol id="places-list"></ol>
