@@ -48,7 +48,7 @@ test('mobile interaction flow: points, styles, terrain, GPS states and safe text
   await import(`../app.js?test=${Date.now()}`);
   await new Promise(resolve => setImmediate(resolve));
   map.fire('style.load'); map.fire('load');
-  assert.equal(markers.length, 11);
+  assert.equal(markers.length, data.features.length);
   assert.ok(markers[0].classList.contains('main'));
   assert.equal(map.options.pixelRatio, 2);
   assert.ok(map.options.fitBoundsOptions.padding.top + map.options.fitBoundsOptions.padding.bottom < 568);

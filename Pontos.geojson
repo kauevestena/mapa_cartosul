@@ -11,8 +11,9 @@
 {"type":"Feature","properties":{"Nome":"Pista de Atletismo - Entrada","Anotação":null},"geometry":{"type":"Point","coordinates":[-52.688759765624965,-26.195669996331411]}},
 {"type":"Feature","properties":{"Nome":"Bloco B","Anotação":"apresentação de Pôsteres"},"geometry":{"type":"Point","coordinates":[-52.68953883361813,-26.196480685965845]}},
 {"type":"Feature","properties":{"Nome":"Entrada do Câmpus","Anotação":"para pedestres"},"geometry":{"type":"Point","coordinates":[-52.689166809081989,-26.196539463517464]}},
-{"type":"Feature","properties":{"Nome":"Quentuxa","Anotação":"Para Água quente (andar térreo)"},"geometry":{"type":"Point","coordinates":[-52.688959579467735,-26.197531284018499]}},
+{"type":"Feature","properties":{"Nome":"Quentuxa","Anotação":"Ponto de Água quente (térreo)"},"geometry":{"type":"Point","coordinates":[-52.688959579467735,-26.197531284018499]}},
 {"type":"Feature","properties":{"Nome":"N110 - Andar Superior","Anotação":"Alojamento B"},"geometry":{"type":"Point","coordinates":[-52.690609367187491,-26.195575669018179]}},
-{"type":"Feature","properties":{"Nome":"M011 - Térreo","Anotação":"Alojamento A"},"geometry":{"type":"Point","coordinates":[-52.690290837890629,-26.195555907849418]}}
+{"type":"Feature","properties":{"Nome":"M011 - Térreo","Anotação":"Alojamento A"},"geometry":{"type":"Point","coordinates":[-52.690290837890629,-26.195555907849418]}},
+{"type":"Feature","properties":{"Nome":"Quentuxa","Anotação":"Ponto de Água quente (térreo)"},"geometry":{"type":"Point","coordinates":[-52.689316899902366,-26.198034170376577]}}
 ]
 }
