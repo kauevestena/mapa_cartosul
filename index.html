@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#173f38">
+  <meta name="description" content="Encontre os locais do CartoSul 2026 no câmpus da UTFPR em Pato Branco.">
+  <title>CartoSul 2026</title>
+  <link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./vendor/maplibre-gl.css">
+  <link rel="stylesheet" href="./style.css">
+  <script defer src="./vendor/maplibre-gl.js"></script>
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <main id="map" aria-label="Mapa dos locais do CartoSul 2026"></main>
+  <header class="brand"><img src="./assets/icon.svg" width="38" height="38" alt=""><div><h1>CartoSul <span>2026</span></h1><p>UTFPR · Pato Branco</p></div></header>
+  <section class="map-options" aria-label="Opções do mapa">
+    <details id="options"><summary>Camadas <span aria-hidden="true">▾</span></summary><div class="options-body">
+      <label for="basemap">Mapa de fundo</label>
+      <select id="basemap" disabled><option value="osm">OpenStreetMap</option><option value="positron">Positron · OpenFreeMap</option><option value="bing">Bing · imagem aérea</option></select>
+      <label class="toggle"><input id="terrain" type="checkbox" checked disabled> Relevo 3D <small>AWS</small></label>
+      <button id="share" type="button">QR code do mapa ↗</button>
+    </div></details>
+  </section>
+  <button id="locate" class="locate" disabled><span aria-hidden="true">◎</span> Minha localização</button>
+  <section class="places" aria-label="Locais do evento">
+    <button id="places-toggle" aria-expanded="false" aria-controls="places-list"><span><strong>Explore o câmpus</strong><small id="point-count">Carregando locais…</small></span><span id="list-arrow" aria-hidden="true">↑</span></button>
+    <ol id="places-list" hidden></ol>
+  </section>
+  <p id="status" role="status" aria-live="polite">Carregando mapa…</p>
+  <noscript><p class="fatal">Ative o JavaScript para visualizar o mapa interativo.</p></noscript>
+  <dialog id="share-dialog" aria-labelledby="share-title"><button class="close" aria-label="Fechar" data-close>×</button><p class="eyebrow">LEVE O MAPA COM VOCÊ</p><h2 id="share-title">CartoSul 2026</h2><img src="./assets/cartosul-2026-qr.svg" width="260" height="260" alt="QR code para https://kauevestena.github.io/mapa_cartosul/"><a href="https://kauevestena.github.io/mapa_cartosul/">Abrir o mapa ↗</a><a class="download" href="./assets/cartosul-2026-qr.png" download>Baixar QR code (PNG)</a></dialog>
+  <dialog id="bing-dialog" aria-labelledby="bing-title"><button class="close" aria-label="Fechar" data-close>×</button><h2 id="bing-title">Bing · imagem aérea</h2><p>O Bing exige uma chave Enterprise válida. Use uma chave autorizada para este site. Ela será usada apenas nesta aba.</p><form id="bing-form"><label for="bing-key">Chave Bing Maps</label><input id="bing-key" type="password" autocomplete="off" required><button type="submit">Usar imagem aérea</button></form><p id="bing-error" role="alert"></p></dialog>
+</body>
+</html>
