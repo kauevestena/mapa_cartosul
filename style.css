@@ -213,12 +213,12 @@ button {
   display:grid;
   place-items:center;
   flex-shrink:0;
-  width:25px;
-  height:25px;
+  width:30px;
+  height:30px;
   border-radius:50%;
   border:1px solid #173f3880;
   color:#132d27;
-  font-size:11px;
+  font-size:13.2px;
   font-weight:800
 }
 .place-note {
@@ -229,8 +229,8 @@ button {
   margin-top:2px
 }
 .point {
-  width:44px;
-  height:44px;
+  width:52.8px;
+  height:52.8px;
   background:none;
   padding:0;
   display:grid;
@@ -241,22 +241,22 @@ button {
 .point .dot {
   display:grid;
   place-items:center;
-  width:27px;
-  height:27px;
-  border:2px solid white;
+  width:32.4px;
+  height:32.4px;
+  border:2.4px solid white;
   outline:1px solid #173f3890;
   background:var(--point-color);
   border-radius:50%;
   color:#102e26;
-  font-size:12px;
+  font-size:14.4px;
   font-weight:800;
   text-shadow:0 0 3px white,0 0 3px white
 }
 .point.main .dot {
-  width:35px;
-  height:35px;
-  border:3px solid white;
-  font-size:15px
+  width:42px;
+  height:42px;
+  border:3.6px solid white;
+  font-size:18px
 }
 .point:focus-visible {
   outline:3px solid #173f38;

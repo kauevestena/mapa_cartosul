@@ -7,7 +7,7 @@ URL após a aprovação e o merge: https://kauevestena.github.io/mapa_cartosul/
 ## Uso
 
 - **Minha localização**: solicita permissão ao tocar, mostra a posição e a precisão do GPS; o controle de GPS também permite ativar/desativar o acompanhamento. HTTPS é necessário. Fora da área do evento, o mapa não sai do câmpus.
-- Pontos numerados e lista acessível com os nomes e as anotações originais. Anfiteatro tem marcador maior. Cores: ColorBrewer Paired.
+- Pontos numerados e lista acessível com os nomes e as anotações originais, aberta por padrão. Toque no mapa ou na lista para abrir o popup com nome e descrição; a lista se recolhe para dar espaço ao popup. Os símbolos e suas áreas de toque foram ampliados em 20%; Anfiteatro mantém o marcador maior. Cores: ColorBrewer Paired.
 - Zoom +/−, bússola, escala métrica e relevo Mapzen Terrarium no AWS, sem chave, com exagero 1×. O botão Relevo 3D permite inclinar a câmera; o terreno já está ativo na vista inicial vertical.
 - OpenStreetMap padrão e Positron/OpenFreeMap sem chave; camadas externas exigem conexão.
 - Bing aérea usa a API oficial de metadados e quadkeys. Ao selecionar, informe uma chave Bing Maps Enterprise autorizada. A chave não é salva em disco/localStorage; é enviada ao Bing via HTTPS. O acesso Basic gratuito foi encerrado. Não incluímos endpoints não documentados nem credenciais de terceiros. Referência: https://learn.microsoft.com/en-us/bingmaps/rest-services/imagery/get-imagery-metadata

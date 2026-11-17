@@ -9,11 +9,11 @@ function notify(message, persistent = false) {
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 for (const button of document.querySelectorAll('[data-close]')) button.onclick = () => button.closest('dialog').close();
 $('share').onclick = () => { $('options').open = false; $('share-dialog').showModal(); };
-$('places-toggle').onclick = () => {
-  const open = $('places-list').hidden;
+function setPlacesOpen(open) {
   $('places-list').hidden = !open; $('places-toggle').setAttribute('aria-expanded', String(open));
   document.querySelector('.places').classList.toggle('open', open); $('list-arrow').textContent = open ? '↓' : '↑';
-};
+}
+$('places-toggle').onclick = () => setPlacesOpen($('places-list').hidden);
 
 async function start() {
   const response = await fetch('./Pontos.geojson');
@@ -57,7 +57,7 @@ async function start() {
       item.textContent = `${index + 1}. ${feature.properties.Nome}${feature.properties['Anotação'] ? ` — ${feature.properties['Anotação']}` : ''}`;
       $('places-list').append(item);
     }
-    $('places-toggle').click();
+    setPlacesOpen(true);
     throw new Error('Seu navegador não conseguiu iniciar o mapa 3D. Tente outro navegador com WebGL. A lista de locais continua disponível.');
   }
   map.addControl(new ml.NavigationControl({ showCompass: true, visualizePitch: true }), 'top-right');
@@ -93,23 +93,28 @@ async function start() {
     const dot = document.createElement('span'); dot.className = 'dot'; dot.textContent = index + 1; button.append(dot);
     markerButtons.push(button);
     const select = () => {
+      setPlacesOpen(false);
       popup?.remove(); markerButtons.forEach(b => b.setAttribute('aria-pressed', 'false')); button.setAttribute('aria-pressed', 'true');
       const content = document.createElement('div'), title = document.createElement('h2'); title.textContent = name; content.append(title);
       if (note) { const paragraph = document.createElement('p'); paragraph.textContent = note; content.append(paragraph); }
-      popup = new ml.Popup({ offset: 24, maxWidth: '285px' }).setLngLat(feature.geometry.coordinates).setDOMContent(content).addTo(map);
+      popup = new ml.Popup({ offset: 29, maxWidth: '285px' }).setLngLat(feature.geometry.coordinates).setDOMContent(content).addTo(map);
       popup.on('close', () => button.setAttribute('aria-pressed', 'false'));
       map.easeTo({ center: feature.geometry.coordinates, duration: reducedMotion ? 0 : 500 });
     };
-    button.onclick = select;
+    button.onclick = event => {
+      // Keep this same click from reaching the map and immediately closing the new popup.
+      event.stopPropagation();
+      select();
+    };
     new ml.Marker({ element: button }).setLngLat(feature.geometry.coordinates).addTo(map);
     const item = document.createElement('li'), listButton = document.createElement('button'); listButton.type = 'button';
     const swatch = document.createElement('span'); swatch.className = 'swatch'; swatch.style.backgroundColor = color; swatch.textContent = index + 1;
     const text = document.createElement('span'); text.textContent = name;
     if (note) { const small = document.createElement('span'); small.className = 'place-note'; small.textContent = note; text.append(small); }
-    listButton.append(swatch, text); listButton.onclick = () => { if (!$('places-list').hidden) $('places-toggle').click(); select(); };
+    listButton.append(swatch, text); listButton.onclick = select;
     item.append(listButton); $('places-list').append(item);
   });
-  $('point-count').textContent = `${data.features.length} locais · toque para ver a lista`;
+  $('point-count').textContent = `${data.features.length} locais · toque em um local`;
 
   function restoreTerrain() {
     if (!map.getSource('terrain')) map.addSource('terrain', terrainSource);

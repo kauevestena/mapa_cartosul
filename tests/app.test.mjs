@@ -13,7 +13,8 @@ test('mobile interaction flow: points, styles, terrain, GPS states and safe text
   t.mock.timers.enable({ apis: ['setTimeout'] });
   const dom = new JSDOM(html, { url: 'https://example.test/mapa_cartosul/' });
   const { window } = dom, events = new Map(), markers = [];
-  let map, geo, lastPopup, fetches = [], triggerCount = 0, bingValid = false;
+  let map, geo, lastPopup, fetches = [], triggerCount = 0, bingValid = false, mapClicks = 0;
+  window.document.getElementById('map').addEventListener('click', () => { mapClicks++; });
   class Evented {
     constructor() { events.set(this, new Map()); }
     on(name, callback) { const list = events.get(this).get(name) || []; list.push(callback); events.get(this).set(name, list); return this; }
@@ -29,7 +30,7 @@ test('mobile interaction flow: points, styles, terrain, GPS states and safe text
     easeTo(camera) { this.camera = camera; }
   }
   class GeoMock extends Evented { constructor(options) { super(); geo = this; this.options = options; } trigger() { triggerCount++; } }
-  class MarkerMock { constructor(options) { markers.push(options.element); } setLngLat() { return this; } addTo() { return this; } }
+  class MarkerMock { constructor(options) { this.element = options.element; markers.push(this.element); } setLngLat() { return this; } addTo() { window.document.getElementById('map').append(this.element); return this; } }
   class PopupMock extends Evented { constructor() { super(); lastPopup = this; } setLngLat() { return this; } setDOMContent(node) { this.content = node; return this; } addTo() { return this; } remove() { this.fire('close'); } }
   for (const name of ['document', 'navigator']) Object.defineProperty(globalThis, name, { value: window[name], configurable: true });
   Object.assign(globalThis, { innerHeight: 568, devicePixelRatio: 3, isSecureContext: true, matchMedia: () => ({ matches: true }), maplibregl: { setWorkerCount() {}, Map: MapMock, GeolocateControl: GeoMock, Marker: MarkerMock, Popup: PopupMock, NavigationControl: class {}, ScaleControl: class {}, AttributionControl: class {} } });
@@ -50,6 +51,9 @@ test('mobile interaction flow: points, styles, terrain, GPS states and safe text
   map.fire('style.load'); map.fire('load');
   assert.equal(markers.length, 11);
   assert.ok(markers[0].classList.contains('main'));
+  assert.equal($('places-list').hidden, false);
+  assert.equal($('places-toggle').getAttribute('aria-expanded'), 'true');
+  assert.ok(window.document.querySelector('.places').classList.contains('open'));
   assert.equal(map.options.pixelRatio, 2);
   assert.ok(map.options.fitBoundsOptions.padding.top + map.options.fitBoundsOptions.padding.bottom < 568);
   assert.equal(map.terrain.source, 'terrain');
@@ -58,10 +62,25 @@ test('mobile interaction flow: points, styles, terrain, GPS states and safe text
   geo.fire('error', { code: 1 }); assert.match($('status').textContent, /Permita/);
   geo.fire('outofmaxbounds'); assert.match($('status').textContent, /fora da área/);
   geo.fire('geolocate'); assert.match($('status').textContent, /precisão/);
-  markers[0].click(); assert.equal(lastPopup.content.querySelector('h2').textContent, 'Anfiteatro');
-  markers[5].click(); assert.equal(lastPopup.content.querySelector('p'), null);
+  // A tap on the symbol itself opens the popup without using the list. The click
+  // must not bubble to MapLibre's map click handler and close that same popup.
+  markers[0].querySelector('.dot').click();
+  assert.equal(lastPopup.content.querySelector('h2').textContent, 'Anfiteatro');
+  assert.equal(lastPopup.content.querySelector('p').textContent, 'Local Central');
+  assert.equal(mapClicks, 0);
+  assert.equal($('places-list').hidden, true);
+  assert.equal($('places-toggle').getAttribute('aria-expanded'), 'false');
+  markers[5].click();
+  assert.equal(lastPopup.content.querySelector('h2').textContent, 'Pista de Atletismo - Entrada');
+  assert.equal(lastPopup.content.querySelector('p'), null);
+  assert.equal(mapClicks, 0);
   $('places-toggle').click(); assert.equal($('places-list').hidden, false);
   $('places-list').querySelector('button').click(); assert.equal($('places-list').hidden, true);
+  assert.equal(lastPopup.content.querySelector('h2').textContent, 'Anfiteatro');
+  assert.equal(lastPopup.content.querySelector('p').textContent, 'Local Central');
+  // Manual collapse/expand remains usable after selecting a place.
+  $('places-toggle').click(); assert.equal($('places-list').hidden, false);
+  $('places-toggle').click(); assert.equal($('places-list').hidden, true);
   $('basemap').value = 'positron'; await $('basemap').onchange({ target: $('basemap') });
   assert.ok(fetches.some(url => url.includes('/styles/positron'))); assert.equal(map.terrain.source, 'terrain');
   $('terrain').checked = false; $('terrain').onchange(); assert.equal(map.terrain, null);
