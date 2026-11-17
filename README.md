@@ -1,13 +1,13 @@
 # CartoSul 2026
 
-Mapa móvel dos 11 locais em `Pontos.geojson`, a única fonte de dados do evento. Os demais arquivos originais não são utilizados nem publicados.
+Mapa móvel dos locais em `Pontos.geojson`, a única fonte de dados do evento. A quantidade de locais, os marcadores, a lista, os popups e os limites acompanham o conteúdo atual do arquivo; cada abertura do mapa revalida o GeoJSON no servidor. Os demais arquivos originais não são utilizados nem publicados.
 
 URL após a aprovação e o merge: https://kauevestena.github.io/mapa_cartosul/
 
 ## Uso
 
 - **Minha localização**: solicita permissão ao tocar, mostra a posição e a precisão do GPS; o controle de GPS também permite ativar/desativar o acompanhamento. HTTPS é necessário. Fora da área do evento, o mapa não sai do câmpus.
-- Pontos numerados e lista acessível com os nomes e as anotações originais. Anfiteatro tem marcador maior. Cores: ColorBrewer Paired.
+- Pontos numerados e lista acessível com os nomes e as anotações originais, aberta por padrão. Toque no mapa ou na lista para abrir o popup com nome e descrição; a lista se recolhe para dar espaço ao popup. Os símbolos e suas áreas de toque foram ampliados em 20%; Anfiteatro mantém o marcador maior. Cores: ColorBrewer Paired.
 - Zoom +/−, bússola, escala métrica e relevo Mapzen Terrarium no AWS, sem chave, com exagero 1×. O botão Relevo 3D permite inclinar a câmera; o terreno já está ativo na vista inicial vertical.
 - OpenStreetMap padrão e Positron/OpenFreeMap sem chave; camadas externas exigem conexão.
 - Bing aérea usa a API oficial de metadados e quadkeys. Ao selecionar, informe uma chave Bing Maps Enterprise autorizada. A chave não é salva em disco/localStorage; é enviada ao Bing via HTTPS. O acesso Basic gratuito foi encerrado. Não incluímos endpoints não documentados nem credenciais de terceiros. Referência: https://learn.microsoft.com/en-us/bingmaps/rest-services/imagery/get-imagery-metadata
@@ -15,7 +15,7 @@ URL após a aprovação e o merge: https://kauevestena.github.io/mapa_cartosul/
 
 ## Limite de navegação
 
-O BBOX é calculado em tempo de execução a partir do GeoJSON: oeste −52.6907793274°, sul −26.1977017003°, leste −52.6887597656°, norte −26.1955559078°. Cada lado recebe 200 m usando os raios locais do elipsoide WGS84 (aproximação local com erro inferior a 1 m nesta área). `maxBounds` do MapLibre limita a navegação e o afastamento; não é uma máscara de recorte de pixels, e perspectivas inclinadas podem mostrar contexto além das bordas.
+O BBOX é calculado em tempo de execução a partir de todos os pontos do GeoJSON, sem coordenadas fixas no código. Cada lado recebe 200 m usando os raios locais do elipsoide WGS84 (aproximação local com erro inferior a 1 m nesta área). `maxBounds` do MapLibre limita a navegação e o afastamento; não é uma máscara de recorte de pixels, e perspectivas inclinadas podem mostrar contexto além das bordas.
 
 ## Desenvolvimento e publicação
 
